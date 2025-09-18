@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Secondary School Mathematics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <style>
+       * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Poppins', sans-serif;
+    color: #2c3e50;
+    background: #f5f6fa;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: #ecf0f1;
+    z-index: 2000;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #3498db;
+    width: 0;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translate(-50%, -20px);
+    background: rgba(52, 152, 219, 0.7);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    z-index: 2001;
+    opacity: 0;
+    max-width: 300px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.3s ease, transform 0.3s ease, scale 0.3s ease;
+}
+
+.progress-text.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    scale: 1;
+}
+
+.progress-text.hide {
+    opacity: 0;
+    transform: translate(-50%, -20px) scale(0.95);
+}
+
+header {
+    background: linear-gradient(90deg, #2c3e50 0%, #3498db 100%);
+    color: white;
+    padding: 1.5rem 0;
+    position: fixed;
+    width: 100%;
+    top: 5px;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+nav {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.logo-main {
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: relative;
+}
+
+.logo-main::after {
+    content: '∑';
+    position: absolute;
+    font-size: 1rem;
+    top: 0;
+    right: -20px;
+    color: #ecf0f1;
+}
+
+.logo-sub {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #ecf0f1;
+    text-transform: uppercase;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-links a:hover::after {
+    content: '→';
+    position: absolute;
+    right: -15px;
+    font-size: 0.8rem;
+}
+
+.hero {
+    margin-top: 65px;
+    padding: 3rem 2rem;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+}
+
+.hero.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero::before {
+    content: 'f(x) = x²';
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 2rem;
+    color: #3498db;
+    opacity: 0.1;
+    transform: rotate(-30deg);
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #3498db;
+    font-weight: 700;
+}
+
+.video-container {
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.video-container iframe {
+    width: 100%;
+    height: 500px;
+    border: none;
+}
+
+.quiz-containers {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem auto;
+    max-width: 900px;
+}
+
+.quiz-container {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(52, 152, 219, 0.05));
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(52, 152, 219, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    padding: 2.5rem;
+    border-radius: 15px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    max-width: 400px;
+    width: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.quiz-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), inset 0 2px 6px rgba(255, 255, 255, 0.3);
+}
+
+.quiz-container h3 {
+    font-size: 1.6rem;
+    color: #3498db;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-question {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    color: #2c3e50;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.quiz-option {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.9rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease, border 0.3s ease;
+    border: 1px solid rgba(52, 152, 219, 0.2);
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #2c3e50;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.quiz-option:hover {
+    background: rgba(52, 152, 219, 0.15);
+    border: 1px solid #3498db;
+    transform: translateY(-3px);
+}
+
+.quiz-option.incorrect-answer {
+    animation: shake 0.4s ease-in-out;
+    border: 2px solid #e74c3c;
+}
+
+.quiz-feedback {
+    margin-top: 1rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    padding: 1rem;
+    background: rgba(52, 152, 219, 0.08);
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-weight: 400;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
+    color: #2c3e50;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.quiz-feedback.show {
+    opacity: 1;
+}
+
+.quiz-feedback.correct::before {
+    content: '🎉 ';
+}
+
+.quiz-feedback.incorrect::before {
+    content: '🤯 ';
+    display: inline-block;
+    animation: spin 0.5s ease-in-out;
+}
+
+.katex {
+    font-size: 1.3em;
+    color: #2c3e50;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.section {
+    padding: 3rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+}
+
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #3498db;
+    font-weight: 700;
+}
+
+.about-course {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+    border-radius: 10px;
+    position: relative;
+}
+
+.course-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.course-item {
+    background: #f9fbfd;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    transition: background 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.course-item::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    color: #3498db;
+    opacity: 0.1;
+}
+
+.course-item:nth-child(1)::before { content: '∈'; }
+.course-item:nth-child(2)::before { content: 'aⁿ'; }
+.course-item:nth-child(3)::before { content: 'x²'; }
+.course-item:nth-child(4)::before { content: '[A]'; }
+.course-item:nth-child(5)::before { content: '≅'; }
+.course-item:nth-child(6)::before { content: 't(n)'; }
+.course-item:nth-child(7)::before { content: '≈'; }
+.course-item:nth-child(8)::before { content: '∑'; }
+.course-item:nth-child(9)::before { content: '∞'; }
+
+.course-item:hover {
+    background: #e6f0fa;
+}
+
+.course-item::after {
+    content: attr(data-symbol);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-10deg);
+    font-size: 1.5rem;
+    color: #3498db;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 2;
+}
+
+.instructor {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+    border-radius: 10px;
+    position: relative;
+}
+
+.instructor::after {
+    content: '∮';
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 2rem;
+    color: #3498db;
+    opacity: 0.1;
+}
+
+.instructor-img {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    flex-shrink: 0;
+    border: 4px solid #3498db;
+}
+
+.instructor-info h3 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.instructor-info p {
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.tutor-btn {
+    display: inline-block;
+    background: #e67e22;
+    color: white;
+    padding: 0.8rem 2rem;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-top: 1rem;
+    position: relative;
+    overflow: hidden;
+    perspective: 1000px;
+    transition: transform 0.5s ease;
+}
+
+.tutor-btn::after {
+    content: 'You Will Fall in Love with Math';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #e67e22;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    transform: rotateY(180deg);
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.tutor-btn:hover {
+    transform: rotateY(180deg);
+}
+
+.tutor-btn:hover::after {
+    opacity: 1;
+}
+
+.cta-section {
+    padding: 3rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.cta {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+    border-radius: 10px;
+    position: relative;
+}
+
+.cta::before {
+    content: 'π';
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 3rem;
+    color: #3498db;
+    opacity: 0.2;
+}
+
+.cta-info {
+    flex: 1;
+}
+
+.cta-info h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #3498db;
+    font-weight: 600;
+}
+
+.cta-info p {
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.countdown {
+    font-size: 1.3rem;
+    margin: 1rem 0;
+    color: #e67e22;
+    font-weight: 600;
+    display: grid; /* Enable Grid */
+    place-items: center; /* Centers both horizontally and vertically */
+}
+
+.buy-btn {
+    display: inline-block;
+    background: #00cc00;
+    color: white;
+    padding: 0.8rem 2rem;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-top: 1rem;
+    position: relative;
+    overflow: hidden;
+    perspective: 1000px;
+    transition: transform 0.5s ease;
+    display: grid; /* Enable Grid */
+    place-items: center; /* Centers both horizontally and vertically */
+}
+
+.buy-btn::after {
+    content: 'Great Choice 😊';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #00cc00;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    transform: rotateY(180deg);
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.5s ease;
+    display: grid; /* Enable Grid */
+    place-items: center; /* Centers both horizontally and vertically */
+}
+
+.buy-btn:hover {
+    transform: rotateY(180deg);
+}
+
+.buy-btn:hover::after {
+    opacity: 1;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(44, 62, 80, 0.9);
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #2c3e50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.loading-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader {
+    width: 60px;
+    height: 60px;
+    border: 5px solid #3498db;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite, oscillate 2s ease-in-out infinite;
+}
+
+.floating-icon {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.2;
+    z-index: -1;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(10deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-10px); }
+    40%, 80% { transform: translateX(10px); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes oscillate {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .video-container iframe {
+        height: 300px;
+    }
+
+    .instructor, .cta {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .nav-links {
+        gap: 1rem;
+    }
+
+    .nav-links a {
+        font-size: 0.9rem;
+    }
+
+    .progress-text {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.8rem;
+    }
+
+    .quiz-containers {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .quiz-container {
+        max-width: 100%;
+        padding: 2rem;
+        backdrop-filter: blur(8px);
+    }
+
+    .quiz-question {
+        font-size: 1.1rem;
+    }
+
+    .quiz-option {
+        font-size: 1rem;
+        border-radius: 8px;
+    }
+
+    .quiz-feedback {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        padding: 0.8rem;
+        border-radius: 8px;
+    }
+
+    .logo-main {
+        font-size: 1.6rem;
+    }
+
+    .logo-sub {
+        font-size: 0.7rem;
+    }
+
+    .section h2 {
+        font-size: 2rem;
+    }
+
+    .instructor-info h3, .cta-info h2 {
+        font-size: 1.8rem;
+    }
+
+    .instructor-info p, .cta-info p {
+        font-size: 1rem;
+    }
+
+    .floating-icon {
+        font-size: 1.5rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="loading-overlay">
+        <div class="loader"></div>
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-text" id="progressText"></div>
+    </div>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-main">Virar Academy</div>
+                <div class="logo-sub">SIMPLIFYING LEARNING, DIGITALLY</div>
+            </div>
+            <ul class="nav-links">
+                <!--li><a href="#home">Home</a></li>
+                <li><a href="#course">Course</a></li>
+                <li><a href="#instructor">Tutor</a></li-->
+                <li><a href="#cta">Enroll</a></li>
+            </ul-->
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <h1>INTRODUCTION TO SECONDARY <br> SCHOOL MATHEMATICS</h1>
+        <div class="video-container">
+            <iframe src="/Users/jeremiahhingoma/Desktop/Tr.jeremiah/video.mp4" allowfullscreen></iframe>
+        </div>
+    </section>
+    <section id="course" class="section">
+        <h2>GCE/GCSE/FORM 1-5 </h2>
+        <div class="about-course">
+            <p>This course with very short videos going direct to the point is designed for all secondary school students, especially those new to high school maths or looking to strengthen their foundational understanding. Whether you're just starting out or preparing for your final exams or re-writing an exam, this course is your go-to guide for mastering over 60 key maths concepts.</p>
+            <div class="course-content">
+                <div class="course-item" data-symbol="\\(A \\cup B\\)">
+                    <h3>Sets</h3>
+                    <p>Explore set operations, unions, intersections, and Venn diagrams.</p>
+                </div>
+                <div class="course-item" data-symbol="\\(a^n\\)">
+                    <h3>Indices</h3>
+                    <p>Learn laws of exponents and their applications in simplification.</p>
+                </div>
+                <div class="course-item" data-symbol="\\(ax^2 + bx + c\\)">
+                    <h3>Algebra</h3>
+                    <p>Master solving equations, polynomials, and algebraic expressions.</p>
+                </div>
+                <div class="course-item" data-symbol="\\([A]\\)">
+                    <h3>Matrices</h3>
+                    <p>Understand matrix operations, determinants, and applications.</p>
+                </div>
+                <div class="course-item" data-symbol="\\(\\triangle ABC \\cong \\triangle DEF\\)">
+                    <h3>Similarity and Congruence</h3>
+                    <p>Discover geometric properties and proofs of similar and congruent figures.</p>
+                </div>
+                <div class="course-item" data-symbol="\\(d = s \\cdot t\\)">
+                    <h3>Travel Graphs</h3>
+                    <p>Analyze distance-time and speed-time graphs for real-world scenarios.</p>
+                </div>
+                <div class="course-item" data-symbol="\\(\\approx\\)">
+                    <h3>Approximation</h3>
+                    <p>Learn techniques for rounding and estimating numerical values.</p>
+                </div>
+                <div class="course-item" data-symbol="\\(a_n = a_1 + (n-1)d\\)">
+                    <h3>Arithmetic Progressions</h3>
+                    <p>Study sequences with constant differences and their sums.</p>
+                </div>
+                <div class="course-item" data-symbol="\\(a_n = a_1 \\cdot r^{n-1}\\)">
+                    <h3>Geometric Progressions</h3>
+                    <p>Explore sequences with constant ratios and their applications.</p>
+                </div>
+            </div>
+        </div>
+    </section>   
+    <section>
+        <section id="course" class="section">
+        <h2>Practice Questions</h2>
+        <div class="quiz-containers">
+    
+            <div class="quiz-container" data-id="1">
+                <h3>Sets Question 1</h3>
+                <div class="quiz-question" data-id="1"></div>
+                <div class="quiz-options" data-id="1"></div>
+                <div class="quiz-feedback" data-id="1"></div>
+            </div>
+            <div class="quiz-container" data-id="2">
+                <h3>Algebra Question 1</h3>
+                <div class="quiz-question" data-id="2"></div>
+                <div class="quiz-options" data-id="2"></div>
+                <div class="quiz-feedback" data-id="2"></div>
+            </div>
+        </div>
+    </sections>
+
+    
+
+    <!--section id="instructor" class="section">
+        <h2>Meet the Tutor</h2>
+        <div class="instructor">
+            <img src="/Users/jeremiahhingoma/Desktop/Tr.jeremiah/image.jpg" alt="Tutor Photo" class="instructor-img">
+            <div class="instructor-info">
+                <h3>Tr Jeremiah</h3>
+                <p>I am a dedicated mathematics educator with a strong belief that every learner is unique. 
+                    My approach is centered on adapting teaching methods to suit different learning styles, 
+                    ensuring that each student not only understands the concepts but also gains the confidence to apply them.
+                    By combining clear explanations with practical strategies, 
+                    I strive to make mathematics engaging, accessible, and rewarding for all learners.</p><br>
+                <p><strong>Bachelor of Arts with Education</strong> </p>
+                <a href="https://wa.me/953227040?text=Hi%2C%20I%27m%20interested%20in%20having%20Tr%20Jeremiah%20as%20my%20personal%20tutor.%20Can%20you%20share%20more%20details%3F" class="tutor-btn" target="_blank">Get Him as Your Personal Tutor</a>
+            </div>
+        </div>
+    <section-->
+
+    <section id="cta" class="section cta-section">
+        <div class="cta">
+            <div class="cta-info">
+                <h2>Enroll Now</h2>
+                <p>Take the first step towards mastering mathematics with expert guidance.</p>
+                <div class="countdown" id="countdown"><span id="timer"></span>!</div>
+                <a href="https://wa.me/953227040?text=Hi%2C%20I%27m%20interested%20in%20the%20Introduction%20to%20Secondary%20School%20Mathematics%20course.%20Can%20you%20share%20more%20details%3F" class="buy-btn" target="_blank">Enroll Now via WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        © 2025 Virar Innovations. All rights reserved.
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <script>
+        // Quiz questions data
+        const questions = [
+            {
+                id: 1,
+                title: "Sets Question 1",
+                question: "In a school, 20 students play football, 15 play basketball, and 10 play both football and basketball. If every student plays at least one of the two games, how many students are there in the school?",
+                options: [
+                    { 
+                        text: "A) 35", 
+                        correct: false, 
+                        feedback: "35 is too high! You might have added the students who play football (20) and basketball (15) without accounting for the 10 who play both. Use the formula for union of sets: \\(|F \\cup B| = |F| + |B| - |F \\cap B| = 20 + 15 - 10 = 30\\). The correct answer is C) 30."
+                    },
+                    { 
+                        text: "B) 25", 
+                        correct: false, 
+                        feedback: "25 is too low! You might have subtracted the overlap (10) twice or miscalculated. The correct approach is \\(|F \\cup B| = |F| + |B| - |F \\cap B| = 20 + 15 - 10 = 30\\). The correct answer is C) 30."
+                    },
+                    { 
+                        text: "C) 30", 
+                        correct: true, 
+                        feedback: "Nice! You correctly applied the inclusion-exclusion principle: \\(|F \\cup B| = |F| + |B| - |F \\cap B| = 20 + 15 - 10 = 30\\). You’re already thinking in sets — imagine what you’ll do after the course!"
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Algebra Question 1",
+                question: "Expand and simplify \\((x^2 + 3x + 2)(x + 1)\\).",
+                options: [
+                    { 
+                        text: "\\(x^3 + 4x^2 + 3x + 2\\)", 
+                        correct: false, 
+                        feedback: "Close, but the coefficient of \\(x\\) is off. Let's expand \\((x^2 + 3x + 2)(x + 1)\\): \\[\\begin{aligned} & x^2(x + 1) + 3x(x + 1) + 2(x + 1) \\\\ &= x^3 + x^2 + 3x^2 + 3x + 2x + 2 \\\\ &= x^3 + (x^2 + 3x^2) + (3x + 2x) + 2 \\\\ &= x^3 + 4x^2 + 5x + 2 \\end{aligned}\\]. The correct answer is \\(x^3 + 4x^2 + 5x + 2\\)."
+                    },
+                    { 
+                        text: "\\(x^3 + 4x^2 + 5x + 2\\)", 
+                        correct: true, 
+                        feedback: "😊 Correct, great job! You expanded \\((x^2 + 3x + 2)(x + 1)\\) correctly: \\[\\begin{aligned} & x^2(x + 1) + 3x(x + 1) + 2(x + 1) \\\\ &= x^3 + x^2 + 3x^2 + 3x + 2x + 2 \\\\ &= x^3 + (x^2 + 3x^2) + (3x + 2x) + 2 \\\\ &= x^3 + 4x^2 + 5x + 2 \\end{aligned}\\]."
+                    },
+                    { 
+                        text: "\\(x^3 + 3x^2 + 2x + 2\\)", 
+                        correct: false, 
+                        feedback: "Almost there! The \\(x^2\\) term is incorrect. Let's expand \\((x^2 + 3x + 2)(x + 1)\\): \\[\\begin{aligned} & x^2(x + 1) + 3x(x + 1) + 2(x + 1) \\\\ &= x^3 + x^2 + 3x^2 + 3x + 2x + 2 \\\\ &= x^3 + (x^2 + 3x^2) + (3x + 2x) + 2 \\\\ &= x^3 + 4x^2 + 5x + 2 \\end{aligned}\\]. The correct answer is \\(x^3 + 4x^2 + 5x + 2\\)."
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Sets Question 2",
+                question: "If A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, what is A ∩ B?",
+                options: [
+                    { 
+                        text: "A) {1, 2, 3, 4, 5, 6}", 
+                        correct: false, 
+                        feedback: "That’s the union, not the intersection! The intersection A ∩ B contains only elements common to both sets. Here, A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, so A ∩ B = {3, 4}. The correct answer is B) {3, 4}."
+                    },
+                    { 
+                        text: "B) {3, 4}", 
+                        correct: true, 
+                        feedback: "Great job! The intersection A ∩ B includes only the elements that are in both A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, which are {3, 4}. You’re nailing sets!"
+                    },
+                    { 
+                        text: "C) {1, 2, 5, 6}", 
+                        correct: false, 
+                        feedback: "Not quite! You might have confused the intersection with the elements not in the intersection. A ∩ B includes only elements common to both A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, so A ∩ B = {3, 4}. The correct answer is B) {3, 4}."
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "Algebra Question 2",
+                question: "Solve for x: \\(2x + 5 = 13\\).",
+                options: [
+                    { 
+                        text: "A) x = 4", 
+                        correct: true, 
+                        feedback: "Correct! Let’s solve \\(2x + 5 = 13\\): \\[\\begin{aligned} 2x + 5 &= 13 \\\\ 2x &= 13 - 5 \\\\ 2x &= 8 \\\\ x &= 4 \\end{aligned}\\]. Well done!"
+                    },
+                    { 
+                        text: "B) x = 5", 
+                        correct: false, 
+                        feedback: "Let’s check: \\(2x + 5 = 13\\). If x = 5, then \\(2(5) + 5 = 10 + 5 = 15\\), which doesn’t equal 13. The correct solution is: \\[\\begin{aligned} 2x + 5 &= 13 \\\\ 2x &= 13 - 5 \\\\ 2x &= 8 \\\\ x &= 4 \\end{aligned}\\]. The correct answer is A) x = 4."
+                    },
+                    { 
+                        text: "C) x = 9", 
+                        correct: false, 
+                        feedback: "That’s too high! Let’s solve \\(2x + 5 = 13\\): \\[\\begin{aligned} 2x + 5 &= 13 \\\\ 2x &= 13 - 5 \\\\ 2x &= 8 \\\\ x &= 4 \\end{aligned}\\]. The correct answer is A) x = 4."
+                    }
+                ]
+            }
+        ];
+
+        // Track current question index for each container
+        let currentQuestionIndices = { 1: 0, 2: 0 }; // Container 1: Sets (Q1, Q3), Container 2: Algebra (Q2, Q4)
+        const questionSets = {
+            1: [questions[0], questions[2]], // Sets: Q1, Q3
+            2: [questions[1], questions[3]]  // Algebra: Q2, Q4
+        };
+
+        // Function to render a question in a specific container
+        function renderQuestion(containerId, questionIndex) {
+            const container = document.querySelector(`.quiz-container[data-id="${containerId}"]`);
+            if (!container) {
+                console.error(`Container with data-id="${containerId}" not found`);
+                return;
+            }
+            const q = questionSets[containerId][questionIndex];
+            if (!q) {
+                console.error(`Question at index ${questionIndex} for container ${containerId} not found`);
+                return;
+            }
+
+            const titleEl = container.querySelector('h3');
+            const questionEl = container.querySelector('.quiz-question');
+            const optionsEl = container.querySelector('.quiz-options');
+            const feedbackEl = container.querySelector('.quiz-feedback');
+
+            if (!titleEl || !questionEl || !optionsEl || !feedbackEl) {
+                console.error(`DOM elements missing in container ${containerId}`);
+                return;
+            }
+
+            titleEl.textContent = q.title;
+            questionEl.textContent = q.question;
+            optionsEl.innerHTML = '';
+            feedbackEl.innerHTML = '';
+            feedbackEl.classList.remove('show', 'correct', 'incorrect');
+
+            q.options.forEach((option, index) => {
+                if (!option.text || option.correct === undefined || !option.feedback) {
+                    console.error(`Invalid option at index ${index} for question ${q.id}:`, option);
+                    return;
+                }
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('quiz-option');
+                optionElement.dataset.answer = option.correct ? 'correct' : 'incorrect';
+                optionElement.dataset.feedback = option.feedback;
+                optionElement.dataset.questionId = q.id.toString();
+                optionElement.innerHTML = option.text;
+                optionElement.addEventListener('click', handleAnswer);
+                optionsEl.appendChild(optionElement);
+            });
+
+            renderMathInElement(questionEl, { throwOnError: false });
+            renderMathInElement(optionsEl, { throwOnError: false });
+        }
+
+        // Function to handle answer selection
+        function handleAnswer(event) {
+            const target = event.target.closest('.quiz-option');
+            if (!target) {
+                console.error('Clicked element is not a quiz option:', event.target);
+                return;
+            }
+
+            const questionId = parseInt(target.dataset.questionId);
+            const containerId = questionId === 1 || questionId === 3 ? 1 : 2;
+            const container = document.querySelector(`.quiz-container[data-id="${containerId}"]`);
+            if (!container) {
+                console.error(`Container with data-id="${containerId}" not found`);
+                return;
+            }
+
+            const quizFeedback = container.querySelector('.quiz-feedback');
+            if (!quizFeedback) {
+                console.error(`Feedback element not found in container ${containerId}`);
+                return;
+            }
+
+            const isCorrect = target.dataset.answer === 'correct';
+            const feedbackText = target.dataset.feedback;
+
+            if (!feedbackText) {
+                console.error('Feedback text is undefined for option:', target);
+                quizFeedback.innerHTML = 'Error: Feedback not available.';
+                quizFeedback.classList.add('show', 'incorrect');
+                renderMathInElement(quizFeedback, { throwOnError: false });
+                return;
+            }
+
+            if (!isCorrect) {
+                target.classList.add('incorrect-answer');
+                setTimeout(() => {
+                    target.classList.remove('incorrect-answer');
+                    target.style.border = '1px solid #dfe6e9';
+                }, 400); // Match shake animation duration
+            }
+
+            // Show feedback
+            quizFeedback.innerHTML = feedbackText;
+            quizFeedback.classList.add('show', isCorrect ? 'correct' : 'incorrect');
+
+            // Re-render KaTeX for feedback
+            renderMathInElement(quizFeedback, { throwOnError: false });
+
+            // Disable further clicks on current question's options
+            container.querySelectorAll('.quiz-options .quiz-option').forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+
+            // Transition to next question in this container after 15 seconds
+            setTimeout(() => {
+                currentQuestionIndices[containerId] = (currentQuestionIndices[containerId] + 1) % 2;
+                renderQuestion(containerId, currentQuestionIndices[containerId]);
+            }, 15000); // 15-second delay for reading feedback
+        }
+
+        // Function to add floating icons to a section
+        function addFloatingIcons(section) {
+            const icons = ['∫', '∑', '∞', 'π', '√'];
+            const colors = ['#3498db', '#e67e22', '#00cc00'];
+            const iconCount = Math.floor(Math.random() * 3) + 3; // 3-5 icons
+
+            for (let i = 0; i < iconCount; i++) {
+                const icon = document.createElement('div');
+                icon.classList.add('floating-icon');
+                icon.textContent = icons[Math.floor(Math.random() * icons.length)];
+                icon.style.color = colors[Math.floor(Math.random() * colors.length)];
+                icon.style.fontSize = `${1.5 + Math.random() * 1.5}rem`;
+                icon.style.left = `${Math.random() * 90}%`;
+                icon.style.top = `${Math.random() * 80}%`;
+                icon.style.animationDelay = `${Math.random() * 4}s`;
+                section.appendChild(icon);
+            }
+        }
+
+        // Render KaTeX math and initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize questions
+            renderQuestion(1, 0); // Sets Question 1
+            renderQuestion(2, 0); // Algebra Question 1
+
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true }
+                ],
+                throwOnError: false
+            });
+
+            // Render KaTeX for course item hover symbols
+            document.querySelectorAll('.course-item').forEach(item => {
+                renderMathInElement(item, { throwOnError: false });
+            });
+
+            // Add floating icons to sections
+            document.querySelectorAll('.hero, .about-course, .instructor, .cta').forEach(section => {
+                addFloatingIcons(section);
+            });
+
+            // Intersection Observer for section animations
+            const sections = document.querySelectorAll('.hero, .section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, {
+                threshold: 0.2
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Video autoplay handling
+        window.addEventListener('load', () => {
+            const iframe = document.querySelector('iframe');
+            if (iframe) {
+                iframe.src = iframe.src;
+            }
+        });
+
+        // Hide loading overlay after page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.loading-overlay').classList.add('hidden');
+            }, 1000);
+        });
+
+        // Progress bar and text update on scroll
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        let currentRange = null;
+        let hideTimeout = null;
+
+        function updateProgressText(scrollPercent) {
+            let newText = '';
+            let newRange = null;
+
+            if (scrollPercent < 25) {
+                newText = '';
+                newRange = 'below25';
+            } else if (scrollPercent >= 25 && scrollPercent < 50) {
+                newText = 'You’re smarter than you think. Math just needs patience.';
+                newRange = '25to50';
+            } else if (scrollPercent >= 50 && scrollPercent < 75) {
+                newText = 'This is not about talent — it’s about practice.';
+                newRange = '50to75';
+            } else if (scrollPercent >= 75 && scrollPercent < 100) {
+                newText = 'One concept at a time. You’ve got this.';
+                newRange = '75to100';
+            } else if (scrollPercent >= 100) {
+                newText = 'Struggling doesn’t mean failing. It means learning.';
+                newRange = '100';
+            }
+
+            if (newRange !== currentRange) {
+                if (hideTimeout) {
+                    clearTimeout(hideTimeout);
+                }
+
+                progressText.classList.add('hide');
+                progressText.classList.remove('show');
+
+                setTimeout(() => {
+                    progressText.textContent = newText;
+                    progressText.classList.remove('hide');
+                    if (newText !== '') {
+                        progressText.classList.add('show');
+                        hideTimeout = setTimeout(() => {
+                            progressText.classList.add('hide');
+                            progressText.classList.remove('show');
+                            hideTimeout = null;
+                        }, 2000);
+                    }
+                    currentRange = newRange;
+                }, 300);
+            }
+        }
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            progressBar.style.width = `${scrollPercent}%`;
+            updateProgressText(scrollPercent);
+        });
+
+        // Countdown timer for 30 days from September 17, 2025, 07:24 AM CAT
+        function updateCountdown() {
+            const now = new Date();
+            const endDate = new Date('2025-10-17T07:24:00+02:00');
+            const timeLeft = endDate - now;
+
+            if (timeLeft <= 0) {
+                document.getElementById('timer').textContent = '0D 0HRS 0MIN 0M';
+                return;
+            }
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById('timer').textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
